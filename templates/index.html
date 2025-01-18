@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task List</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        .task-list { margin-top: 20px; }
+        .task-item { padding: 10px; border: 1px solid #ddd; margin-bottom: 10px; }
+        .task-item button { cursor: pointer; }
+        .button-container { display: flex; gap: 10px; }
+    </style>
+</head>
+<body>
+    <h1>Task Management</h1>
+
+    <!-- Link to Add Task page -->
+    <a href="{{ url_for('add_task') }}">
+        <button>Add New Task</button>
+    </a>
+    
+    <h2>Task List</h2>
+    <div class="task-list">
+        {% for task in tasks %}
+        <div class="task-item">
+            <strong>{{ task.title }}</strong><br>
+            <em>{{ task.description }}</em><br>
+            <span>{{ task.time }}</span><br>
+            <div class="button-container">
+                <a href="{{ url_for('edit_task', task_id=task.id) }}">
+                    <button>Edit</button>
+                </a>
+                <form action="{{ url_for('delete_task', task_id=task.id) }}" method="POST">
+                    <button type="submit">Delete</button>
+                </form>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+</body>
+</html>
